@@ -12,4 +12,4 @@
 ### なんか動かないんだけど
 ------
 ```log``` コマンドでログ見よ？  
-```log stream --info --predicate 'subsystem == "ANTP"'```
+```log stream --info --predicate 'subsystem == "ANTP"'``` してから起動とかしよ？
