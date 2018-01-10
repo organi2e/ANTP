@@ -51,7 +51,7 @@ class Peer: NSObject {
 		}
 	}
 	override init() {
-		let myPeerID: MCPeerID = MCPeerID(displayName: [Host.current().name ?? ".local", UUID().uuidString].joined(separator: "-"))
+		let myPeerID: MCPeerID = MCPeerID(displayName: Host.current().name ?? ".local")
 		let procName: String = ProcessInfo.processInfo.processName
 		facility = OSLog(subsystem: procName, category: String(describing: type(of: self)))
 		session = MCSession(peer: myPeerID)
