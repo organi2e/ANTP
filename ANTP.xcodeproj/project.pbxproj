@@ -35,6 +35,7 @@
 		87847B7720049CDD005DDB46 /* session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = session.swift; sourceTree = "<group>"; };
 		87F8AFF52004BFF4008E8A84 /* adjust.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = adjust.swift; sourceTree = "<group>"; };
 		87F8AFF72005CB84008E8A84 /* trust.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = trust.swift; sourceTree = "<group>"; };
+		87F8AFF92005E153008E8A84 /* readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = readme.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +74,7 @@
 				87847B7520049CBB005DDB46 /* advertiser.swift */,
 				87847B7320049CA3005DDB46 /* browser.swift */,
 				87847B6C20049B62005DDB46 /* main.swift */,
+				87F8AFF92005E153008E8A84 /* readme.md */,
 			);
 			path = ANTP;
 			sourceTree = "<group>";
