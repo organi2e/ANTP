@@ -1,5 +1,5 @@
 //
-//  peer+istrust.swift
+//  trust.swift
 //  ANTP
 //
 //  Created by Kota Nakano on 1/10/18.
