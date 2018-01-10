@@ -26,7 +26,7 @@ class TrustMV: TrustCheck {
 		m2 = mix.0 * m2 + mix.1 * ( duration * duration )
 		let m: Decimal = m1
 		let v: Decimal = m2 - m1 * m1
-		let d: Decimal = ( duration - m )
+		let d: Decimal = duration - m
 		let x: NSDecimalNumber = d * d / v / -2 as NSDecimalNumber
 		let s: NSDecimalNumber = 2 * v * .pi as NSDecimalNumber
 		return threshold < exp(x.doubleValue) / sqrt(s.doubleValue)

@@ -18,8 +18,7 @@ extension Peer {
 				let duration: Decimal = cputime - request
 				let delay: Decimal = ref - rtctime
 				guard trust.isTrust(duration: duration) else {
-					let message: String = "unreliable: \(duration)"
-					os_log("%{public}@", log: facility, type: .info, message)
+					os_log("unreliable respond time %{public}@", log: facility, type: .info, duration.description)
 					return
 				}
 				adjust(delta: delay + duration / 2)
@@ -41,30 +40,23 @@ extension Peer {
 }
 extension Peer {
 	func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
-		switch state {
-		case .connected:
-			break
-		case .notConnected:
-			break
-		case .connecting:
-			break
-		}
+		
 	}
 }
 extension Peer {
 	func session(_ session: MCSession, didStartReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, with progress: Progress) {
 		let message: String = "\(#function) has not been implemented"
-		os_log("%{public}@", log: facility, type: .info, message)
+		os_log("%{public}@", log: facility, type: .fault, message)
 		assertionFailure(message)
 	}
 	func session(_ session: MCSession, didReceive stream: InputStream, withName streamName: String, fromPeer peerID: MCPeerID) {
 		let message: String = "\(#function) has not been implemented"
-		os_log("%{public}@", log: facility, type: .info, message)
+		os_log("%{public}@", log: facility, type: .fault, message)
 		assertionFailure(message)
 	}
 	func session(_ session: MCSession, didFinishReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, at localURL: URL?, withError error: Error?) {
 		let message: String = "\(#function) has not been implemented"
-		os_log("%{public}@", log: facility, type: .info, message)
+		os_log("%{public}@", log: facility, type: .fault, message)
 		assertionFailure(message)
 	}
 }
