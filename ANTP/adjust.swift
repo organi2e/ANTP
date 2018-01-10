@@ -24,20 +24,20 @@ extension Peer {
 			let(sec, nsec): (Int, Int) = delta.idsplit(order: 9)
 			var ts: timespec = timespec()
 			guard clock_gettime(CLOCK_REALTIME, &ts) == 0 else {
-				os_log("adjust step get failed", log: facility, type: .error)
+				os_log("adjust step get failed, errno: %d", log: facility, type: .error, errno)
 				return
 			}
 			ts.tv_sec += sec
 			ts.tv_nsec += nsec
 			guard clock_settime(CLOCK_REALTIME, &ts) == 0 else {
-				os_log("adjust step set failed", log: facility, type: .error)
+				os_log("adjust step set failed, errno: %d", log: facility, type: .error, errno)
 				return
 			}
 		} else {
 			let(sec, usec): (Int, Int) = delta.idsplit(order: 6)
 			var tv: timeval = timeval(tv_sec: sec, tv_usec: __darwin_suseconds_t(usec))
 			guard adjtime(&tv, nil) == 0 else {
-				os_log("adjust slew failed", log: facility, type: .error)
+				os_log("adjust slew failed, errno: %d", log: facility, type: .error, errno)
 				return
 			}
 		}

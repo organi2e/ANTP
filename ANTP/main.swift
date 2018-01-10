@@ -17,7 +17,7 @@ class Peer: NSObject {
 	var cputime: Decimal {
 		var ts: timespec = timespec()
 		guard clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &ts) == 0 else {
-			os_log("%{public}@, %d", log: facility, type: .error, #file, #line)
+			os_log("%{public}@, %d, errno: %d", log: facility, type: .error, #file, #line, errno)
 			return .nan
 		}
 		var decimal: Decimal = 0
@@ -27,7 +27,7 @@ class Peer: NSObject {
 	var rtctime: Decimal {
 		var ts: timespec = timespec()
 		guard clock_gettime(CLOCK_REALTIME, &ts) == 0 else {
-			os_log("%{public}@, %d", log: facility, type: .error, #file, #line)
+			os_log("%{public}@, %d, errno: %d", log: facility, type: .error, #file, #line, errno)
 			return .nan
 		}
 		var decimal: Decimal = 0
