@@ -47,7 +47,7 @@ class TrustMn: TrustCheck {
 		return duration / minduration < threshold
 	}
 }
-//応答時間の中央値を逐次近似し中央値に近い場合に信頼
+//応答時間の最頻値を逐次近似し中央値に近い場合に信頼
 class TrustMd: TrustCheck {
 	var queue: [Decimal]
 	let length: Int
