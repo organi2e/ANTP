@@ -36,6 +36,7 @@ extension Peer {
 		} else {
 			let(sec, usec): (Int, Int) = delta.idsplit(order: 6)
 			var tv: timeval = timeval(tv_sec: sec, tv_usec: __darwin_suseconds_t(usec))
+			
 			guard adjtime(&tv, nil) == 0 else {
 				os_log("adjust slew failed, errno: %d", log: facility, type: .error, errno)
 				return
