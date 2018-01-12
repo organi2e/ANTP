@@ -8,32 +8,6 @@
 import MultipeerConnectivity
 import os.log
 extension Peer {
-	func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
-		let unarchiver: NSKeyedUnarchiver = NSKeyedUnarchiver(forReadingWith: data)
-		do {
-			guard let request: Decimal = unarchiver.decodeObject()as?Decimal else {
-				throw NSError(domain: #file, code: #line, userInfo: nil)
-			}
-			if let ref: Decimal = unarchiver.decodeObject(forKey: "rtc")as?Decimal {
-				let duration: Decimal = cputime - request
-				let delay: Decimal = ref - rtctime
-				guard trust.isTrust(duration: duration) else {
-					os_log("unreliable respond time %{public}@", log: facility, type: .info, duration.description)
-					return
-				}
-				adjust(delta: delay + duration / 2)
-			} else {
-				let archiver: NSKeyedArchiver = NSKeyedArchiver()
-				archiver.encodeRootObject(request)
-				archiver.encode(rtctime, forKey: "rtc")
-				try session.send(archiver.encodedData, toPeers: [peerID], with: .unreliable)
-			}
-		} catch {
-			os_log("%{public}@", log: facility, type: .error, error.localizedDescription)
-		}
-	}
-}
-extension Peer {
 	func session(_ session: MCSession, didReceiveCertificate certificate: [Any]?, fromPeer peerID: MCPeerID, certificateHandler: @escaping (Bool) -> Void) {
 		certificateHandler(true)
 	}
