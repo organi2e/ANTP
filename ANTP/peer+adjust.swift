@@ -22,6 +22,25 @@ extension Peer {
 		}
 		return ts.decimal
 	}
+	private func adjust(Δ: Decimal) throws {
+		if 0.5 < abs(Δ) {
+			var origin: timespec = timespec()
+			guard clock_gettime(CLOCK_REALTIME, &origin) == 0 else {
+				throw NSError(domain: #file, code: #line, userInfo: ["errno": errno])
+			}
+			var target: timespec = (origin.decimal + Δ).ts
+			guard clock_settime(CLOCK_REALTIME, &target) == 0 else {
+				throw NSError(domain: #file, code: #line, userInfo: ["errno": errno])
+			}
+			os_log("step adjust delay %{public}@", log: facility, type: .info, Δ.description)
+		} else {
+			var tv: timeval = Δ.tv
+			guard adjtime(&tv, nil) == 0 else {
+				throw NSError(domain: #file, code: #line, userInfo: ["errno": errno])
+			}
+			os_log("slew adjust delay %{public}@", log: facility, type: .info, Δ.description)
+		}
+	}
 	func request() {
 		let sorted: [MCPeerID] = session.connectedPeers.sorted {
 			$0.displayName < $1.displayName
@@ -34,7 +53,7 @@ extension Peer {
 			try archiver.encodeRootObject(getCPU())
 			try session.send(archiver.encodedData, toPeers: [dwarf], with: .unreliable)
 		} catch {
-			os_log("%{public}@", log: facility, type: .error, error.localizedDescription)
+			os_log("%{public}@", log: facility, type: .error, String(describing: error))
 		}
 	}
 	func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
@@ -57,26 +76,7 @@ extension Peer {
 				try session.send(archiver.encodedData, toPeers: [peerID], with: .unreliable)
 			}
 		} catch {
-			os_log("%{public}@", log: facility, type: .error, error.localizedDescription)
-		}
-	}
-	func adjust(Δ: Decimal) throws {
-		if 0.5 < abs(Δ) {
-			var origin: timespec = timespec()
-			guard clock_gettime(CLOCK_REALTIME, &origin) == 0 else {
-				throw NSError(domain: #file, code: #line, userInfo: ["errno": errno])
-			}
-			var target: timespec = (origin.decimal + Δ).ts
-			guard clock_settime(CLOCK_REALTIME, &target) == 0 else {
-				throw NSError(domain: #file, code: #line, userInfo: ["errno": errno])
-			}
-			os_log("step adjust delay %{public}@", log: facility, type: .info, Δ.description)
-		} else {
-			var tv: timeval = Δ.tv
-			guard adjtime(&tv, nil) == 0 else {
-				throw NSError(domain: #file, code: #line, userInfo: ["errno": errno])
-			}
-			os_log("slew adjust delay %{public}@", log: facility, type: .info, Δ.description)
+			os_log("%{public}@", log: facility, type: .error, String(describing: error))
 		}
 	}
 }
