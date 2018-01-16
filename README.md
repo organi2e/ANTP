@@ -19,8 +19,8 @@ i.e. ```log stream --info --predicate 'subsystem == "ANTP"'``` and launch the ut
 ### Split group of nearby machines
 ------
 This utility builds a p2p network. The network has a name from *process name.* In short, renamed the process will build another p2p network group.  
-i.e. the operations ```mv ANTP ANTP-another
-sudo ANTP-another``` will build another synchronous group.   
+i.e. the operations ```mv ANTP ANTP-another```  
+```sudo ANTP-another``` will build another synchronous group.   
 
 ### How to specify leader machine of RTC
 ------
