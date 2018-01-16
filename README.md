@@ -1,10 +1,10 @@
 ### What's this
 ------
-A utility to synchronous system [RTC](https://en.wikipedia.org/wiki/Real-time_clock) between several nearby machines they are offline or cannot connect to global ntp server.  
+A utility to synchronous system [RTC](https://en.wikipedia.org/wiki/Real-time_clock) between several nearby machines they are offline or cannot connect to any public ntp servers.  
 
 ### Build dependency
 ------
-XCode9.x, Swift 4.x and macOS 10.13
+XCode9.x, Swift 4.x and macOS 10.13.x
 
 ### How to use
 ------
