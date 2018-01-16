@@ -1,6 +1,6 @@
 ### What's this
 ------
-A utility to synchronous system ![https://en.wikipedia.org/wiki/Real-time_clock]RTC between several nearby machines they are offline or cannot connect to global ntp server.  
+A utility to synchronous system [RTC](https://en.wikipedia.org/wiki/Real-time_clock) between several nearby machines they are offline or cannot connect to global ntp server.  
 
 ### Build dependency
 ------
