@@ -1,30 +1,30 @@
-### なにこれ
+### What's this
 ------
-プロセスを実行している端末間で時刻を同期させるツール  
-グローバルのntpサーバに接続できないローカルネット内部で時刻を同期させる場合などに使お？  
+A utility to synchronous system ![https://en.wikipedia.org/wiki/Real-time_clock]RTC between several nearby machines they are offline or cannot connect to global ntp server.  
 
-### どう使うの
+### Build dependency
 ------
-同期させたい全端末で管理者権限で実行しよ？  
-```sudo ANTP```  
-自動実行させるなら`launchdaemon`とか併用しよ？
+XCode9.x, Swift 4.x and macOS 10.13
 
-### なんか動かないんだけど
+### How to use
 ------
-```log``` コマンドでログ見よ？  
-```log stream --info --predicate 'subsystem == "ANTP"'``` とかしよ？
+Run the utility with administrator privilege on nearby machines should be synchronous.  
+such as ```sudo ANTP```  
 
-### 同期させるグループを分けたいんだけど
+### Logging the work
 ------
-プロセス名 = 構成するネットワーク名  
-つまりプロセス名を変えて実行しよ？  
-ログpredicateに使うsubsystem名も変わるので注意しよ？
+Use ```log``` command to display the log.  
+i.e. ```log stream --info --predicate 'subsystem == "ANTP"'``` and launch the utility.  
 
-### 時刻の基準となる端末を指定したいんだけど
+### Split group of nearby machines
 ------
-辞書順で一番若いホスト名の端末が参照先になる  
-つまり基準にしたい端末のホスト名をAとか若いものにしよ？  
+This utility builds a p2p network. The network has a name from *process name*  
+In short, renamed the process will build another p2p network group.  
+i.e. the operations ```mv ANTP ANTP-another
+sudo ANTP-another``` will build another synchronous group.   
 
-### ホスト名変えずに指定したいんだけど
+### How to specify leader machine of RTC
 ------
-諦めて
+This utility assume the machines has own host name, and refer RTC to the machine has first host name from sorted that.  
+In short, rename the host with younger name such as *A.local*, and run the process. 
+
