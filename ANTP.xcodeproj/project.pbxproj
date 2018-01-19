@@ -158,6 +158,7 @@
 		87847B6E20049B62005DDB46 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
@@ -165,6 +166,7 @@
 		87847B6F20049B62005DDB46 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
