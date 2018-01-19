@@ -7,11 +7,11 @@
 //
 import Foundation
 import os.log
-//信頼できる遅延か応答時刻から逐次的に判断
+//MARK:
 protocol TrustCheck {
 	func isTrust(duration: Decimal) -> Bool
 }
-//応答時間が正規分布と仮定し平均に近い場合に信頼
+//MARK: Gaussian
 class TrustMV: TrustCheck {
 	var m1: Decimal
 	var m2: Decimal
@@ -34,7 +34,7 @@ class TrustMV: TrustCheck {
 		return threshold < exp(x.doubleValue) / sqrt(s.doubleValue)
 	}
 }
-//応答時間の最小値を保持し最小値に近い場合に信頼
+//MARK: minimal ratio
 class TrustMn: TrustCheck {
 	var minduration: Decimal
 	let threshold: Decimal
@@ -47,7 +47,7 @@ class TrustMn: TrustCheck {
 		return duration / minduration < threshold
 	}
 }
-//応答時間の最頻値を逐次近似し中央値に近い場合に信頼
+//MARK: median
 class TrustMd: TrustCheck {
 	var queue: [Decimal]
 	let length: Int
