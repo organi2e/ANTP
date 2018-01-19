@@ -42,13 +42,18 @@ extension Peer {
 		}
 	}
 	func request() {
+		guard !session.connectedPeers.isEmpty else {
+			os_log("no connected peer found", log: facility, type: .info)
+			return
+		}
 		let sorted: [MCPeerID] = session.connectedPeers.sorted {
 			$0.displayName < $1.displayName
 		}
+		guard let dwarf: MCPeerID = sorted.first, dwarf.displayName < session.myPeerID.displayName else {
+			os_log("any peer shouldn't be refer", log: facility, type: .info)
+			return
+		}
 		do {
-			guard let dwarf: MCPeerID = sorted.first, dwarf.displayName < session.myPeerID.displayName else {
-				throw NSError(domain: #file, code: #line, userInfo: nil)
-			}
 			let archiver: NSKeyedArchiver = NSKeyedArchiver()
 			try archiver.encodeRootObject(getCPU())
 			try session.send(archiver.encodedData, toPeers: [dwarf], with: .unreliable)
