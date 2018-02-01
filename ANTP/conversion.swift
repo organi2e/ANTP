@@ -16,16 +16,27 @@ extension Decimal {
 	var ts: timespec {
 		var integer: Decimal = .nan
 		var decimal: Decimal = .nan
-		NSDecimalRound(&integer, [self], 0, .plain)
-		NSDecimalMultiplyByPowerOf10(&decimal, [self-integer], 9, .plain)
-		return timespec(tv_sec: integer.intValue, tv_nsec: decimal.intValue)
+		NSDecimalRound(&integer, [magnitude], 0, .down)
+		NSDecimalMultiplyByPowerOf10(&decimal, [magnitude-integer], 9, .down)
+		switch sign {
+		case .plus:
+			return timespec(tv_sec: integer.intValue, tv_nsec: decimal.intValue)
+		case .minus:
+			return timespec(tv_sec: -integer.intValue, tv_nsec: -decimal.intValue)
+		}
 	}
 	var tv: timeval {
 		var integer: Decimal = .nan
 		var decimal: Decimal = .nan
-		NSDecimalRound(&integer, [self], 0, .plain)
-		NSDecimalMultiplyByPowerOf10(&decimal, [self-integer], 6, .plain)
-		return timeval(tv_sec: integer.intValue, tv_usec: decimal.int32Value)
+		NSDecimalRound(&integer, [magnitude], 0, .down)
+		NSDecimalMultiplyByPowerOf10(&decimal, [magnitude-integer], 6, .down)
+		switch sign {
+		case .plus:
+			return timeval(tv_sec: integer.intValue, tv_usec: decimal.int32Value)
+		case .minus:
+			return timeval(tv_sec: -integer.intValue, tv_usec: -decimal.int32Value)
+		}
+//		return timeval(tv_sec: integer.intValue, tv_usec: decimal.int32Value)
 	}
 }
 extension timeval {
