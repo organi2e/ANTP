@@ -36,7 +36,6 @@ extension Decimal {
 		case .minus:
 			return timeval(tv_sec: -integer.intValue, tv_usec: -decimal.int32Value)
 		}
-//		return timeval(tv_sec: integer.intValue, tv_usec: decimal.int32Value)
 	}
 }
 extension timeval {
