@@ -11,14 +11,14 @@ extension Peer {
 	private func getCPU() throws -> Decimal {
 		var ts: timespec = timespec()
 		guard clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &ts) == 0 else {
-			throw NSError(domain: #file, code: #line, userInfo: ["errno": errno])
+			throw NSError(domain: #function, code: #line, userInfo: ["errno": errno])
 		}
 		return ts.decimal
 	}
 	private func getRTC() throws -> Decimal {
 		var ts: timespec = timespec()
 		guard clock_gettime(CLOCK_REALTIME, &ts) == 0 else {
-			throw NSError(domain: #file, code: #line, userInfo: ["errno": errno])
+			throw NSError(domain: #function, code: #line, userInfo: ["errno": errno])
 		}
 		return ts.decimal
 	}
@@ -26,17 +26,17 @@ extension Peer {
 		if 0.5 < abs(Δ) {
 			var origin: timespec = timespec()
 			guard clock_gettime(CLOCK_REALTIME, &origin) == 0 else {
-				throw NSError(domain: #file, code: #line, userInfo: ["errno": errno])
+				throw NSError(domain: #function, code: #line, userInfo: ["errno": errno])
 			}
 			var target: timespec = (origin.decimal + Δ).ts
 			guard clock_settime(CLOCK_REALTIME, &target) == 0 else {
-				throw NSError(domain: #file, code: #line, userInfo: ["errno": errno])
+				throw NSError(domain: #function, code: #line, userInfo: ["errno": errno])
 			}
 			os_log("step adjust delay %{public}@", log: facility, type: .info, Δ.description)
 		} else {
 			var tv: timeval = Δ.tv
 			guard adjtime(&tv, nil) == 0 else {
-				throw NSError(domain: #file, code: #line, userInfo: ["errno": errno])
+				throw NSError(domain: #function, code: #line, userInfo: ["errno": errno])
 			}
 			os_log("slew adjust delay %{public}@", log: facility, type: .info, Δ.description)
 		}
@@ -65,13 +65,13 @@ extension Peer {
 		let unarchiver: NSKeyedUnarchiver = NSKeyedUnarchiver(forReadingWith: data)
 		do {
 			guard let request: Decimal = unarchiver.decodeObject()as?Decimal else {
-				throw NSError(domain: #file, code: #line, userInfo: nil)
+				throw NSError(domain: #function, code: #line, userInfo: nil)
 			}
 			if let ref: Decimal = unarchiver.decodeObject(forKey: "rtc")as?Decimal {
 				let duration: Decimal = try getCPU() - request
 				let delay: Decimal = try ref - getRTC()
 				guard trust.isTrust(duration: duration) else {
-					throw NSError(domain: #file, code: #line, userInfo: ["duration": duration])
+					throw NSError(domain: #function, code: #line, userInfo: ["duration": duration])
 				}
 				try adjust(Δ: delay + duration / 2)
 			} else {
