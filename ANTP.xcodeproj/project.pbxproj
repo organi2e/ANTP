@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8730DCFF203FD2BD0096434C /* getopt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8730DCFE203FD2BD0096434C /* getopt.swift */; };
 		87847B6D20049B62005DDB46 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87847B6C20049B62005DDB46 /* main.swift */; };
 		87847B7420049CA3005DDB46 /* peer+browser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87847B7320049CA3005DDB46 /* peer+browser.swift */; };
 		87847B7620049CBB005DDB46 /* peer+advertiser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87847B7520049CBB005DDB46 /* peer+advertiser.swift */; };
@@ -30,6 +31,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8730DCFE203FD2BD0096434C /* getopt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = getopt.swift; sourceTree = "<group>"; };
 		87847B6920049B62005DDB46 /* ANTP */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ANTP; sourceTree = BUILT_PRODUCTS_DIR; };
 		87847B6C20049B62005DDB46 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		87847B7320049CA3005DDB46 /* peer+browser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "peer+browser.swift"; sourceTree = "<group>"; };
@@ -78,6 +80,7 @@
 				87F8AFF52004BFF4008E8A84 /* peer+adjust.swift */,
 				8787740E20088B8F00EE2B36 /* conversion.swift */,
 				87F8AFF72005CB84008E8A84 /* trust.swift */,
+				8730DCFE203FD2BD0096434C /* getopt.swift */,
 				87847B6C20049B62005DDB46 /* main.swift */,
 			);
 			path = ANTP;
@@ -142,6 +145,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				87847B7820049CDD005DDB46 /* peer+session.swift in Sources */,
+				8730DCFF203FD2BD0096434C /* getopt.swift in Sources */,
 				878774112008904A00EE2B36 /* peer.swift in Sources */,
 				8787740F20088B8F00EE2B36 /* conversion.swift in Sources */,
 				87847B7620049CBB005DDB46 /* peer+advertiser.swift in Sources */,

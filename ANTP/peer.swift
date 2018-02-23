@@ -29,7 +29,7 @@ class Peer: NSObject {
 		advertiser.startAdvertisingPeer()
 		browser.delegate = self
 		browser.startBrowsingForPeers()
-		timer.schedule(deadline: .now(), repeating: 1)
+		timer.schedule(deadline: .now(), repeating: t)
 		timer.setEventHandler(handler: request)
 		timer.resume()
 	}

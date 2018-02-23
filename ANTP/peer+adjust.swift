@@ -23,7 +23,7 @@ extension Peer {
 		return ts.decimal
 	}
 	private func adjust(Δ: Decimal) throws {
-		if 0.5 < abs(Δ) {
+		if τ < abs(Δ) {
 			var origin: timespec = timespec()
 			guard clock_gettime(CLOCK_REALTIME, &origin) == 0 else {
 				throw NSError(domain: #function, code: #line, userInfo: ["errno": errno])
