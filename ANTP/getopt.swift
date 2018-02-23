@@ -7,13 +7,13 @@
 //
 import Foundation
 func getopt(default: [String: [Any]]) -> ([String: (Bool, [Any])], [String]) {
-	var mutable: [String: (Bool, [Any])] = `default`.mapValues { (false, $0) }
-	let (rest, _, _): ([String], String, Int) = ProcessInfo.processInfo.arguments.dropFirst().reduce(([String](), "", 0)) {
-		if $0.1.isEmpty {
-			mutable[$1]?.0 = true
-			return mutable.keys.contains($1) ? ($0.0, $1, 0) : ($0.0 + [$1], "", 0)
-		} else if let v: [Any] = mutable[$0.1]?.1, $0.2 < v.count {
-			mutable[$0.1]?.1[$0.2] = {
+	let (opt, rest, _, _): ([String: (Bool, [Any])], [String], String, Int) = ProcessInfo.processInfo.arguments.dropFirst().reduce((`default`.mapValues {(false, $0)}, [String](), "", 0)) {
+		let key: String = $0.2
+		let idx: Int = $0.3
+		if key.isEmpty {
+			return $0.0.keys.contains($1) ? ($0.0.merging([$1: (true, [])]) { ($1.0, $0.1) }, $0.1, $1, 0) : ($0.0, $0.1 + [$1], "", 0)
+		} else if let v: (Bool, [Any]) = $0.0[key], idx < v.1.count {
+			let val: Any = {
 				switch $0 {
 				case let val as Int: return Int($1) ?? val
 				case let val as Int8: return Int8($1) ?? val
@@ -35,11 +35,14 @@ func getopt(default: [String: [Any]]) -> ([String: (Bool, [Any])], [String]) {
 					
 				default: return $1
 				}
-			} (v[$0.2], $1)
-			return $0.2 < v.count - 1 ? ([], $0.1, $0.2 + 1) : ([], "", 0)
+			} (v.1[idx], $1)
+			let sum: [String: (Bool, [Any])] = $0.0.merging([key: (true, [])]) {
+				($1.0, $0.1.enumerated().map { [$0.offset == idx ? val : $0.element] }.reduce([], +))
+			}
+			return idx < v.1.count - 1 ? (sum, [], $0.2, idx + 1) : (sum, [], "", 0)
 		} else {
-			return ($0.0 + [$1], "", 0)
+			return ($0.0, $0.1 + [$1], "", 0)
 		}
 	}
-	return (mutable, rest)
+	return (opt, rest)
 }
