@@ -14,7 +14,9 @@ func getopt(default: [String: [Any]]) -> ([String: (Bool, [Any])], [String]) {
 			return $0.0.keys.contains($1) ? ($0.0.merging([$1: (true, [])]) { ($1.0, $0.1) }, $0.1, $1, 0) : ($0.0, $0.1 + [$1], "", 0)
 		} else if let v: (Bool, [Any]) = $0.0[key], idx < v.1.count {
 			let val: Any = {
+				
 				switch $0 {
+					
 				case let val as Int: return Int($1) ?? val
 				case let val as Int8: return Int8($1) ?? val
 				case let val as Int16: return Int16($1) ?? val
@@ -27,17 +29,18 @@ func getopt(default: [String: [Any]]) -> ([String: (Bool, [Any])], [String]) {
 				case let val as UInt32: return UInt32($1) ?? val
 				case let val as UInt64: return UInt64($1) ?? val
 					
+				case let val as Bool: return Bool($1) ?? val
 				case let val as Float: return Float($1) ?? val
 				case let val as Double: return Double($1) ?? val
 				case let val as Decimal: return Decimal(string: $1) ?? val
-					
-				case let val as Bool: return Bool($1) ?? val
-					
+				
 				default: return $1
+					
 				}
+				
 			} (v.1[idx], $1)
 			let sum: [String: (Bool, [Any])] = $0.0.merging([key: (true, [])]) {
-				($1.0, $0.1.enumerated().map { [$0.offset == idx ? val : $0.element] }.reduce([], +))
+				($1.0, $0.1.enumerated().map { [$0 == idx ? val : $1] }.reduce([], +))
 			}
 			return idx < v.1.count - 1 ? (sum, [], key, idx + 1) : (sum, [], "", 0)
 		} else {

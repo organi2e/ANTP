@@ -60,12 +60,8 @@ class TrustMd: TrustCheck {
 	func isTrust(duration: Decimal) -> Bool {
 		queue.append(duration)
 		queue.sort()
-		remove: while length < queue.count {
-			if queue.count % 2 == 0, 2 < queue.count {
-				_ = (queue.removeFirst(), queue.removeLast())
-			} else {
-				break remove
-			}
+		while length < queue.count, queue.count % 2 == 0 {
+			_ = (queue.removeFirst(), queue.removeLast())
 		}
 		guard let index: Int = queue.index(of: duration) else {
 			return false
