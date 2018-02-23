@@ -39,7 +39,7 @@ func getopt(default: [String: [Any]]) -> ([String: (Bool, [Any])], [String]) {
 			let sum: [String: (Bool, [Any])] = $0.0.merging([key: (true, [])]) {
 				($1.0, $0.1.enumerated().map { [$0.offset == idx ? val : $0.element] }.reduce([], +))
 			}
-			return idx < v.1.count - 1 ? (sum, [], $0.2, idx + 1) : (sum, [], "", 0)
+			return idx < v.1.count - 1 ? (sum, [], key, idx + 1) : (sum, [], "", 0)
 		} else {
 			return ($0.0, $0.1 + [$1], "", 0)
 		}
